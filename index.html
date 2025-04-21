@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Pickup Line Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Neubrutalism Theme */
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #fef7e9;
+        }
+        .neu-border {
+            border: 3px solid #000;
+            box-shadow: 5px 5px 0px #000;
+            transition: all 0.2s ease;
+        }
+        .neu-border:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px #000;
+        }
+        .neu-button {
+            background: #ff6b6b;
+            color: #000;
+            border: 3px solid #000;
+            box-shadow: 5px 5px 0px #000;
+            transition: all 0.2s ease;
+        }
+        .neu-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px #000;
+        }
+        .result-box {
+            background: #a8e6cf;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8 text-center">Pickup Line Generator <i class="bi bi-heart-fill text-red-500"></i></h1>
+        
+        <div class="space-y-6">
+            <div>
+                <label class="block font-bold mb-2">Scenario</label>
+                <textarea id="scenario" placeholder="We matched because we both love hiking..." class="w-full p-3 neu-border bg-white resize-none h-32"></textarea>
+            </div>
+
+            <div>
+                <label class="block font-bold mb-2">Tone</label>
+                <select id="tone" class="w-full p-3 neu-border bg-white">
+                    <option value="flirty">Flirty</option>
+                    <option value="funny">Funny</option>
+                    <option value="sweet">Sweet</option>
+                    <option value="bold">Bold</option>
+                    <option value="witty">Witty</option>
+                    <option value="romantic">Romantic</option>
+                    <option value="other">Other</option>
+                </select>
+                <div id="customToneContainer" class="hidden mt-4">
+                    <input type="text" id="customTone" placeholder="Describe your custom tone..." class="w-full p-3 neu-border bg-white">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block font-bold mb-2">Who are you?</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="sender" value="male" class="mr-2">
+                            <span>Male</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="sender" value="female" class="mr-2">
+                            <span>Female</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold mb-2">Who are you texting?</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="receiver" value="male" class="mr-2">
+                            <span>Male</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="receiver" value="female" class="mr-2">
+                            <span>Female</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button id="generateBtn" class="w-full py-4 px-6 text-xl font-bold neu-button">
+                Generate Pickup Line <i class="bi bi-magic"></i>
+            </button>
+
+            <div id="result" class="hidden p-6 neu-border result-box mt-6">
+                <p class="text-lg font-bold">Your pickup line will appear here!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Show/hide custom tone input
+        const toneSelect = document.getElementById('tone');
+        const customToneContainer = document.getElementById('customToneContainer');
+        
+        toneSelect.addEventListener('change', () => {
+            customToneContainer.style.display = toneSelect.value === 'other' ? 'block' : 'none';
+        });
+
+        // Generate button click handler
+        document.getElementById('generateBtn').addEventListener('click', () => {
+            const scenario = document.getElementById('scenario').value;
+            const tone = toneSelect.value === 'other' ? document.getElementById('customTone').value : toneSelect.value;
+            const sender = document.querySelector('input[name="sender"]:checked')?.value;
+            const receiver = document.querySelector('input[name="receiver"]:checked')?.value;
+
+            // Validation
+            if (!scenario || !tone || !sender || !receiver) {
+                alert('Please fill in all fields!');
+                return;
+            }
+
+            // Show result box with loading state
+            const resultBox = document.getElementById('result');
+            resultBox.classList.remove('hidden');
+            resultBox.innerHTML = '<p class="text-lg">Generating your perfect pickup line... <i class="bi bi-hourglass-split animate-spin"></i></p>';
+
+            // Simulate API call (replace with actual API integration)
+            setTimeout(() => {
+                resultBox.innerHTML = `<p class="text-lg font-bold">Here's your pickup line:</p>
+                    <p class="mt-2 text-xl">"Is your name WiFi? Because I'm feeling a strong connection! 😉"</p>`;
+            }, 1500);
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
